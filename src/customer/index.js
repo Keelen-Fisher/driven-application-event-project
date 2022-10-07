@@ -9,7 +9,7 @@ const customerPickUp2 = customerPickUp(socket);
 const Chance = require('chance');
 let chance = new Chance();
 
-setTimeout(() => {
+setInterval(() => {
   console.log('---------------------Client Has Started Their Order, Ready for Pickup-------------------');
   const payload = {
     store: `Kenny G's Saxophone 'n More Store`,
@@ -17,5 +17,6 @@ setTimeout(() => {
     customer: chance.name(),
     address: chance.address(),
   };
+
   customerPickUp2(payload);
-}, 5000);
+}, 2000);
