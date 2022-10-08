@@ -1,7 +1,7 @@
 'use strict';
 
-const { io } = require('socket.io-client');
-const socket = io('http://localhost:3004');
+// const { io } = require('socket.io-client');
+// const socket = io('http://localhost:3004');
 
 // const customerPickUp = require('./customerPickUp');
 // const customerPickUp2 = customerPickUp(socket);

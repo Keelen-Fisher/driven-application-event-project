@@ -23,6 +23,7 @@ iHub.on('connection', (socket) => {
       currentQueue = messageQueue.read(queueKey);
     }
     currentQueue.store(payload.messageId, payload);
+    console.log(messageQueue);
     console.log('This is the order from the customer: ', currentQueue.read(payload.messageId));
     socket.broadcast.emit('NEWCUSTOMER', payload);
   });
@@ -38,12 +39,14 @@ iHub.on('connection', (socket) => {
     }
     currentQueue.store(payload.messageId, payload);
     console.log('This order is in transit: ', currentQueue.read(payload.messageId));
-    
+    console.log(messageQueue);
+    currentQueue = messageQueue.read('customers');
     if(!currentQueue){
       throw new Error('no queue created');
     }
     let message = currentQueue.remove(payload.messageId);
     console.log('This has been deleted from the key: TRANSIT', message);
+    console.log(messageQueue);
   });
 
   // delete from the queue/ 2  
@@ -51,21 +54,25 @@ iHub.on('connection', (socket) => {
     console.log('Order confirmed and is ready to be delivered.');
     socket.broadcast.emit('ORDERCONFIRMED');
     // enter the queue
-    let currentQueue = messageQueue.read('customers');
+    let currentQueue = messageQueue.read(payload.queueId);
     console.log(messageQueue);
     if(!currentQueue){
       throw new Error('no queue created');
     }
     let message = currentQueue.remove(payload.messageId);
     console.log('This has been deleted from the key: DELIVERED', message);
+    console.log(messageQueue);
   });
 
   socket.on('GET_INSTRUMENT', (payload) => {
     console.log('This happened');
-    let currentQueue = messageQueue.read(payload.queueId);
+    console.log(messageQueue);
+    let currentQueue = messageQueue.read('customers');
     if(currentQueue && currentQueue.data){
+      console.log(currentQueue);
       Object.keys(currentQueue.data).forEach(messageId => {
         socket.emit('CUSTOMER', currentQueue.read(messageId));
+        console.log('confirm emit');
       });
     }
   });
