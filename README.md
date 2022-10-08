@@ -19,3 +19,8 @@
 - Must operate over a network
 
 ![UML Diagram](assets/Lab14UML.png)
+
+- 10/07/2022
+  - implement the queue functionality
+  - Message client interface
+  - Customize message and the event
