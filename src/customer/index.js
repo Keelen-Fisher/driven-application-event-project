@@ -1,10 +1,10 @@
 'use strict';
 
 const { io } = require('socket.io-client');
-const socket = io('http://localhost:3002');
+const socket = io('http://localhost:3004');
 
-const customerPickUp = require('./customerPickUp');
-const customerPickUp2 = customerPickUp(socket);
+// const customerPickUp = require('./customerPickUp');
+// const customerPickUp2 = customerPickUp(socket);
 
 const MessageClient = require('../lib/messageClient');
 const customer = new MessageClient('customers');
@@ -19,10 +19,11 @@ setInterval(() => {
   console.log('---------------------Client Has Started Their Order, Ready for Pickup-------------------');
   const payload = {
     store: `Kenny G's Saxophone 'n More Store`,
-    orderID: chance.guid(),
+    messageId: chance.guid(),
     customer: chance.name(),
     address: chance.address(),
   };
 
-  customerPickUp2(payload);
+  console.log('Sending Object: ', payload);
+  customer.publish('CUSTOMER', payload );
 }, 2000);

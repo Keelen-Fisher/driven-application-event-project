@@ -1,7 +1,7 @@
 'use strict';
 
 const { io } = require('socket.io-client');
-const SOCKET_URL = process.env.SOCKET_URL || 'http://localhost:3002';
+const SOCKET_URL = process.env.SOCKET_URL || 'http://localhost:3004';
 
 class MessageClient {
   constructor(queueId){
